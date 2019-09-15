@@ -25,7 +25,7 @@ class Ui(QtWidgets.QMainWindow):
 
         root = tk.Tk()
         root.withdraw()
-        self.save_dir = None
+        self.save_dir = " "
         
         # Signals
         self.dirButton.clicked.connect(self.saveDir)
@@ -54,17 +54,7 @@ class Ui(QtWidgets.QMainWindow):
 
             try:
             #if self.isCon and self.camera.IsGrabbing():
-                self.grabResult = self.camera.RetrieveResult(5000, pylon.TimeoutHandling_ThrowException)
-
-                if self.grabResult.GrabSucceeded():
-                    image = self.converter.Convert(self.grabResult)
-                    img = image.GetArray()
-
-                    guiImg = QImage(img, self.grabResult.Width, self.grabResult.Height, self.grabResult.Width*3, QImage.Format_RGB888)
-                    pix = QPixmap(guiImg)
-                    outpix = pix.scaledToWidth(896)
-                    self.imgLabel.setPixmap(outpix)
-
+                """
                 if self.isSaving:
                     font = self.capLabel.font()
                     font.setPointSize(36)
@@ -76,6 +66,25 @@ class Ui(QtWidgets.QMainWindow):
                 else:
                     self.capLabel.setText("")
                 self.capLabel.setText("")
+                """
+                if self.isSaving:
+                    time.sleep(3.0)
+                    self.isSaving = False
+                    self.saveButton.setText("Save Image")
+
+
+                self.grabResult = self.camera.RetrieveResult(5000, pylon.TimeoutHandling_ThrowException)
+
+                if self.grabResult.GrabSucceeded():
+                    image = self.converter.Convert(self.grabResult)
+                    img = image.GetArray()
+
+                    guiImg = QImage(img, self.grabResult.Width, self.grabResult.Height, self.grabResult.Width*3, QImage.Format_RGB888)
+                    pix = QPixmap(guiImg)
+                    outpix = pix.scaledToWidth(896)
+                    self.imgLabel.setPixmap(outpix)
+
+                
             
             except:
                 blank = np.ones([1080, 1080, 3], dtype=np.uint8)*255
@@ -102,28 +111,33 @@ class Ui(QtWidgets.QMainWindow):
                 
     
     def saveDir(self):
-        self.save_dir = filedialog.askdirectory(initialdir="./", title="Select Folder")
+        direct = filedialog.askdirectory(initialdir="./", title="Select Folder")
+        if direct is not None:
+            self.save_dir = direct
         self.dirShow.setText(self.save_dir)
-        print(self.save_dir)
+
+        #print(self.save_dir)
 
     def saveImage(self):
         if self.save_dir is None:
             self.saveDir()
+        self.isSaving = True
+        self.saveButton.setText("Saving...")
 
         now = "{}".format(datetime.now()).replace(":", "-")
         filename = now + ".png"
         path = self.save_dir + "/" + filename
-        print(path)
+        #print(path)
 
         try:
-            self.isSaving = True
+            
             img = pylon.PylonImage()
             img.AttachGrabResultBuffer(self.grabResult)
             img.Save(pylon.ImageFileFormat_Png, path)
 
         except:
             QtWidgets.QMessageBox.about(None, "Saving Error", "Camera is not connected")
-        print("Save Function")
+        #print("Save Function")
         
 
     
