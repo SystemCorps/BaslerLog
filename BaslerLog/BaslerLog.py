@@ -11,7 +11,7 @@ from datetime import datetime
 
 # pylon
 from pypylon import pylon
-import cv2
+#import cv2
 import numpy as np
 
 
@@ -25,7 +25,7 @@ class Ui(QtWidgets.QMainWindow):
 
         root = tk.Tk()
         root.withdraw()
-        self.save_dir = " "
+        self.save_dir = os.getcwd()
         
         # Signals
         self.dirButton.clicked.connect(self.saveDir)
@@ -83,8 +83,6 @@ class Ui(QtWidgets.QMainWindow):
                     pix = QPixmap(guiImg)
                     outpix = pix.scaledToWidth(896)
                     self.imgLabel.setPixmap(outpix)
-
-                
             
             except:
                 blank = np.ones([1080, 1080, 3], dtype=np.uint8)*255
@@ -92,6 +90,8 @@ class Ui(QtWidgets.QMainWindow):
                 blankpix = QPixmap(blankImg)
                 blankout = blankpix.scaledToWidth(896)
                 self.imgLabel.setPixmap(blankout)
+
+            time.sleep(0.1)
                 
 
     
@@ -112,14 +112,18 @@ class Ui(QtWidgets.QMainWindow):
     
     def saveDir(self):
         direct = filedialog.askdirectory(initialdir="./", title="Select Folder")
-        if direct is not None:
-            self.save_dir = direct
-        self.dirShow.setText(self.save_dir)
 
-        #print(self.save_dir)
+        if isinstance(direct, str) and len(direct) > 0:
+            self.save_dir = direct
+            self.dirShow.setText(self.save_dir)
+        else:
+            self.save_dir = os.getcwd()
+            self.dirShow.setText(self.save_dir)
+
+
 
     def saveImage(self):
-        if self.save_dir is None:
+        if self.save_dir is "./":
             self.saveDir()
         self.isSaving = True
         self.saveButton.setText("Saving...")
