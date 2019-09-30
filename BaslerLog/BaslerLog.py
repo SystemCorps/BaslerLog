@@ -14,13 +14,17 @@ from pypylon import pylon
 #import cv2
 import numpy as np
 
+WIN_WIDTH = 1400
+WIN_HEIGHT = 1080
 
+IMG_WIDTH = 1344
+IMG_HEIGHT = 960
 
 class Ui(QtWidgets.QMainWindow):
     def __init__(self):
         super(Ui, self).__init__()
         uic.loadUi('./gui/Logger.ui', self)
-        self.setFixedSize(1080, 750)
+        self.setFixedSize(WIN_WIDTH, WIN_HEIGHT)
         self.show()
 
         root = tk.Tk()
@@ -31,8 +35,6 @@ class Ui(QtWidgets.QMainWindow):
         self.dirButton.clicked.connect(self.saveDir)
         self.saveButton.clicked.connect(self.saveImage)
         self.camButton.clicked.connect(self.camSet)
-        self.gainButton.clicked.connect(self.gainSet)
-        self.expButton.clicked.connect(self.expSet)
         
 
         # Camera
@@ -81,34 +83,19 @@ class Ui(QtWidgets.QMainWindow):
 
                     guiImg = QImage(img, self.grabResult.Width, self.grabResult.Height, self.grabResult.Width*3, QImage.Format_RGB888)
                     pix = QPixmap(guiImg)
-                    outpix = pix.scaledToWidth(896)
+                    outpix = pix.scaledToWidth(IMG_WIDTH)
                     self.imgLabel.setPixmap(outpix)
             
             except:
                 blank = np.ones([1080, 1080, 3], dtype=np.uint8)*255
                 blankImg = QImage(blank, 1080, 1080, 1080*3, QImage.Format_RGB888)
                 blankpix = QPixmap(blankImg)
-                blankout = blankpix.scaledToWidth(896)
+                blankout = blankpix.scaledToWidth(IMG_WIDTH)
                 self.imgLabel.setPixmap(blankout)
 
             time.sleep(0.1)
                 
 
-    
-    def gainSet(self):
-        try:
-            self.camera.GainAuto.SetValue("Once")
-
-        except:
-            QtWidgets.QMessageBox.about(None, "Connection Error", "Camera is not connected")
-
-    
-    def expSet(self):
-        try:
-            self.camera.ExposureAuto.SetValue("Once")
-        except:
-            QtWidgets.QMessageBox.about(None, "Connection Error", "Camera is not connected")
-                
     
     def saveDir(self):
         direct = filedialog.askdirectory(initialdir="./", title="Select Folder")
