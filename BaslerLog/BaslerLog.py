@@ -15,10 +15,10 @@ from pypylon import pylon
 import numpy as np
 
 WIN_WIDTH = 1400
-WIN_HEIGHT = 1040
+WIN_HEIGHT = 1020
 
-IMG_WIDTH = 1344
-IMG_HEIGHT = 960
+IMG_WIDTH = 1288
+IMG_HEIGHT = 920
 
 class Ui(QtWidgets.QMainWindow):
     def __init__(self):
