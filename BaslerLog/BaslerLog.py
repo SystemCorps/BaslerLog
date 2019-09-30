@@ -15,7 +15,7 @@ from pypylon import pylon
 import numpy as np
 
 WIN_WIDTH = 1400
-WIN_HEIGHT = 1080
+WIN_HEIGHT = 1040
 
 IMG_WIDTH = 1344
 IMG_HEIGHT = 960
