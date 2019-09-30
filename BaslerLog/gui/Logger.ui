@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1400</width>
+    <width>1300</width>
     <height>1020</height>
    </rect>
   </property>
@@ -29,7 +29,7 @@
    <widget class="QPushButton" name="saveButton">
     <property name="geometry">
      <rect>
-      <x>1260</x>
+      <x>1160</x>
       <y>940</y>
       <width>80</width>
       <height>61</height>
@@ -45,7 +45,7 @@
    <widget class="QTextBrowser" name="dirShow">
     <property name="geometry">
      <rect>
-      <x>760</x>
+      <x>660</x>
       <y>970</y>
       <width>400</width>
       <height>25</height>
@@ -62,7 +62,7 @@ p, li { white-space: pre-wrap; }
    <widget class="QPushButton" name="dirButton">
     <property name="geometry">
      <rect>
-      <x>1160</x>
+      <x>1060</x>
       <y>970</y>
       <width>80</width>
       <height>25</height>
@@ -78,7 +78,7 @@ p, li { white-space: pre-wrap; }
    <widget class="QLabel" name="dirLabel">
     <property name="geometry">
      <rect>
-      <x>760</x>
+      <x>660</x>
       <y>945</y>
       <width>131</width>
       <height>21</height>
@@ -96,7 +96,7 @@ p, li { white-space: pre-wrap; }
    <widget class="QLabel" name="imgLabel">
     <property name="geometry">
      <rect>
-      <x>28</x>
+      <x>6</x>
       <y>0</y>
       <width>1288</width>
       <height>920</height>

@@ -14,7 +14,7 @@ from pypylon import pylon
 #import cv2
 import numpy as np
 
-WIN_WIDTH = 1400
+WIN_WIDTH = 1300
 WIN_HEIGHT = 1020
 
 IMG_WIDTH = 1288
@@ -23,7 +23,9 @@ IMG_HEIGHT = 920
 class Ui(QtWidgets.QMainWindow):
     def __init__(self):
         super(Ui, self).__init__()
-        uic.loadUi('./gui/Logger.ui', self)
+        #uic.loadUi('./gui/Logger.ui', self)
+        ui_path = os.path.dirname(os.path.realpath(__file__)) + '/gui/Logger.ui'
+        uic.loadUi(ui_path, self)
         self.setFixedSize(WIN_WIDTH, WIN_HEIGHT)
         self.show()
 
